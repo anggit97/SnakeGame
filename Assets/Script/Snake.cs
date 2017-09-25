@@ -15,7 +15,7 @@ public class Snake : MonoBehaviour {
 
 	private Transform snakeTransform;
 	private float lastMove;
-	private float timeInBetweenMove = 0.25f;
+	private float timeInBetweenMove = 0.5f;
 	private Vector3 direction;
 
 	private void Start(){
@@ -32,7 +32,31 @@ public class Snake : MonoBehaviour {
 		if(Time.time - lastMove > timeInBetweenMove){
 			//Move
 			lastMove = Time.time;
-			snakeTransform.position += direction;
+
+			//Detect direction of snake
+			if(direction.x == 1){
+				snakeX++;
+			}
+			if(direction.x == -1){
+				snakeX--;
+			}
+			if(direction.y == 1){
+				snakeY++;
+			}
+			if(direction.y == -1){
+				snakeY--;
+			}
+
+			//if the snake is goes out of bound
+			if (snakeX > 9 || snakeX < 0 || snakeY > 9 || snakeY < 0) {
+				Debug.Log ("Out of Bound");
+			} else {
+				//Move
+				snakeTransform.position += direction;
+				grid [snakeX, snakeY] = snakeScore;
+			}
+
+				
 		}
 
 		// Input Controll for game
